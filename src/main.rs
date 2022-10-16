@@ -49,7 +49,7 @@ pub enum InjectorError {
 #[derive(Parser, Debug)]
 #[clap(
     name = "yai",
-    version = "0.1.2",
+    version = "0.1.3",
     about = "Yet Another Injector for windows x64 dlls."
 )]
 struct Args {
@@ -277,7 +277,6 @@ fn main() -> Result<(), InjectorError> {
     let payload_location = &args.payload;
 
     let mut current_dir = std::env::current_dir()?;
-    current_dir.pop();
     current_dir.push(payload_location);
     let payload_location = current_dir.as_path();
 
