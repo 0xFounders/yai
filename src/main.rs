@@ -1,5 +1,3 @@
-use std::path::Path;
-
 use clap::Parser;
 use sysinfo::{Pid, PidExt, ProcessExt, System, SystemExt};
 use thiserror::Error;
@@ -51,7 +49,7 @@ pub enum InjectorError {
 #[derive(Parser, Debug)]
 #[clap(
     name = "yai",
-    version = "0.0.1",
+    version = "0.1.2",
     about = "Yet Another Injector for windows x64 dlls."
 )]
 struct Args {
@@ -59,7 +57,7 @@ struct Args {
     #[clap(short, long, value_parser)]
     target: String,
 
-    /// Absolute path to payload dll
+    /// Relative path to payload dll
     #[clap(short, long, value_parser)]
     payload: String,
 }
@@ -277,7 +275,11 @@ fn main() -> Result<(), InjectorError> {
     let args = Args::parse();
     let process_name = &args.target;
     let payload_location = &args.payload;
-    let payload_location = Path::new(payload_location);
+
+    let mut current_dir = std::env::current_dir()?;
+    current_dir.pop();
+    current_dir.push(payload_location);
+    let payload_location = current_dir.as_path();
 
     match payload_location.exists() {
         true => {}
