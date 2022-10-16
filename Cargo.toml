@@ -2,9 +2,15 @@
 name = "yai"
 version = "0.1.0"
 edition = "2021"
-description = "placeholder"
+description = "Yet Another Injector for windows x64 dlls."
 license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+clap = { version = "4.0.15", features = ["derive"] }
+log = "0.4.17"
+pretty_env_logger = "0.4.0"
+thiserror = "1.0.32"
+sysinfo = "0.26.4"
+winapi = { version = "0.3.9", features = ["winuser", "processthreadsapi", "libloaderapi", "handleapi", "memoryapi"] }
